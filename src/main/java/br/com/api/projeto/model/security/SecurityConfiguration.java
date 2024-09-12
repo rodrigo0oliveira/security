@@ -31,7 +31,8 @@ public class SecurityConfiguration {
 	private final TokenProvider tokenProvider;
 	
 	private static final String [] ENDPOINTS_LIBERADOS = {
-			""
+			"/auth/signup",
+			"/auth/login"
 	};
 	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
