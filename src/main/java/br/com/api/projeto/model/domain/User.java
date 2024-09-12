@@ -15,17 +15,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 @ToString
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@SuperBuilder
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_users")
 public class User implements UserDetails{
@@ -39,11 +41,11 @@ public class User implements UserDetails{
 	private String id;
 	
 	@Column(name = "username")
-	@Getter @Setter
+	@Setter
 	private String username;
 	
 	@Column(name = "password")
-	@Getter @Setter
+	@Setter
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

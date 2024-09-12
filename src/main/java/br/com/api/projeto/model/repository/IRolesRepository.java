@@ -8,4 +8,6 @@ import br.com.api.projeto.model.domain.Roles;
 @Repository
 public interface IRolesRepository extends JpaRepository<Roles, String>{
 
+	Roles findByName(String name);
+
 }
