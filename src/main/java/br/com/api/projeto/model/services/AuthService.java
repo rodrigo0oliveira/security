@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.api.projeto.model.controller.NewAccountRequest;
+import br.com.api.projeto.model.domain.NewAccountRequest;
 import br.com.api.projeto.model.domain.User;
 import br.com.api.projeto.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
