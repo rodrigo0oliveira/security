@@ -14,7 +14,7 @@ import br.com.api.projeto.model.services.AuthService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/security/auth")
 @RequiredArgsConstructor
 public class AuthController {
 	
