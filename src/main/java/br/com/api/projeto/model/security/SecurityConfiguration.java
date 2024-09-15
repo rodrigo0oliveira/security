@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.api.projeto.model.exceptions.CustomAcessDeniedHandler;
+import br.com.api.projeto.model.exceptions.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -61,7 +62,7 @@ public class SecurityConfiguration {
          .sessionManagement(session -> session
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
          .addFilterBefore(new JWTFilter(tokenProvider),UsernamePasswordAuthenticationFilter.class)
-             .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint((AuthenticationEntryPoint) new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+             .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint((AuthenticationEntryPoint) new CustomAuthenticationEntryPoint()))
              .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(new CustomAcessDeniedHandler()));
 
 		 return http.build();
