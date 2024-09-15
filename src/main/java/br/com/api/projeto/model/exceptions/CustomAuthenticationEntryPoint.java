@@ -16,7 +16,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint{
 			AuthenticationException authException) throws IOException, ServletException {
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.setContentType("application/json");
-		response.getWriter().write("Error: Você precisa estar autorizado para acessar esse recurso, por favor realize o login!");
+		response.getWriter().write("Error: Credenciais inválidas!");
 		
 	}
 
