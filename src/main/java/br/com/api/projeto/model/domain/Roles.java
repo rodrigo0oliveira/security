@@ -8,10 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -19,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(of = "id")
 @SuperBuilder
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "tb_roles")
 public class Roles implements GrantedAuthority{
@@ -26,13 +26,11 @@ public class Roles implements GrantedAuthority{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	@Getter 
+	@GeneratedValue(strategy = GenerationType.UUID) 
 	@Column(name = "role_id")
 	private String id;
 	
 	@Column(name = "name")
-	@Getter @Setter 
 	private String name;
 	
 

@@ -17,35 +17,31 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@ToString
+
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "tb_users")
+@Data
 public class User implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Getter
 	@Column(name = "user_id")
 	private String id;
 	
 	@Column(name = "username")
-	@Setter
 	private String username;
 	
 	@Column(name = "password")
-	@Setter
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -89,7 +85,18 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
+	@Override
+	public String toString() {
+		return "{" +
+                "\"id\":\"" + id+ "\"," +
+                "\"username\":\"" + username + "\"," +
+                "\"roles\":" + roles.toString() +
+                "}";
+	}
 	
+    
+    
 	
 
 }
