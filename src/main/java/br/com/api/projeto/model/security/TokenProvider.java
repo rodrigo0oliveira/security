@@ -39,7 +39,7 @@ public class TokenProvider {
 	@Value("${jwt.expiration-time}")
 	private Integer expirationTime;
 	
-	public TokenResponse generateToken(Authentication authentication) {
+	public TokenResponse generateToken(Authentication authentication) throws JsonProcessingException {
 		
 		final Date now = new Date();
 		
@@ -49,8 +49,10 @@ public class TokenProvider {
 		
 		final User user = getUsuario(authentication);
 		
+		
 		final String auth = Jwts.builder()
 				.setIssuer("WEB TOKEN")
+				.setSubject(user.toString())
 				.setIssuedAt(now)
 				.setNotBefore(now)
 				.setExpiration(expirationDate)
@@ -91,13 +93,13 @@ public class TokenProvider {
 		Claims claims = Jwts.parser().setSigningKey(jwtKey.getBytes(StandardCharsets.UTF_8))
 				.parseClaimsJws(jwt).getBody();
 		
-		return objectMapper.readValue(claims.getSubject(), User.class);
+		return objectMapper.readValue(claims.getSubject(),User.class);
 	}
 	
 
 	private String extractToken(String authToken) {
 		if(authToken.toLowerCase().startsWith("bearer")) {
-			return authToken.substring("bearer".length());
+			return authToken.substring("bearer ".length());
 		}
 		return authToken;
 	}

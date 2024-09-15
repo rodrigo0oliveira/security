@@ -11,10 +11,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@ToString
 @EqualsAndHashCode(of = "id")
 @SuperBuilder
 @NoArgsConstructor
@@ -43,6 +41,11 @@ public class Roles implements GrantedAuthority{
 	public String getAuthority() {
 		return name;
 	}
+	
+	@Override
+	public String toString() {
+        return "{\"id\":\"" + id + "\", \"name\":\"" + name + "\"}";
+    }
 	
 	
 	
