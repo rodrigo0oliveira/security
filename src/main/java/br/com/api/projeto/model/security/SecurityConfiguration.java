@@ -35,7 +35,7 @@ public class SecurityConfiguration {
 	};
 	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
-			"/test/needAdmin"
+			"/security/test/needAdmin"
 	};
 	
 	@Bean
