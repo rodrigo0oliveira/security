@@ -16,10 +16,12 @@ public class RoleService {
 	private final IRolesRepository IrolesRepository;
 	
 	public Roles getRoleByName(String name) {
-		Roles role = IrolesRepository.findByName(name);
+		Roles role = IrolesRepository.findByName(name).orElse(null);
 		if(Objects.isNull(role)) {
-			Roles newRole = Roles.builder().id(UUID.randomUUID().toString()).name("ROLE_"+name).build();
-			return IrolesRepository.save(newRole);
+			return IrolesRepository.save(Roles.builder()
+                    .id(UUID.randomUUID().toString())
+                    .name("ROLE_" + name)
+            .build());
 					
 		}
 		return role;
