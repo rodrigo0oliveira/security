@@ -44,6 +44,9 @@ public class User implements UserDetails{
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "document")
+	private String document;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_users_roles",
 	joinColumns = @JoinColumn(name="user_id"),
