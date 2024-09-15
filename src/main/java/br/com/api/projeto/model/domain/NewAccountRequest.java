@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class NewAccountRequest {
+public  abstract  class NewAccountRequest {
 	
 	private String name;
 	
 	private String password;
+	
+	private String document;
 	
 	private String roleName;
 	
