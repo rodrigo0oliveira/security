@@ -30,15 +30,18 @@ public class AuthService {
 	
 	
 	public void createAccount(NewAccountRequest request) {
-		User user = User.builder().id(UUID.randomUUID().toString())
-				.username(request.getName())
-				.password(passwordEncoder.encode(request.getPassword()))
-				.roles(Collections.singleton(roleService.getRoleByName(request.getRoleName())))
-				.build();
+		String password = passwordEncoder.encode(request.getPassword());
 		
-		userRepository.save(user);				
+		User user = User.builder()
+				.id(UUID.randomUUID().toString())
+				.document(request.getDocument())
+						.password(password)
+						.roles(Collections.singletonList(roleService.getRoleByName(request.getRoleName()))).build();
+						
 		
+		userRepository.save(user);		
 	}
+	
 
 
 	public TokenResponse login(LoginRequest login) throws Exception {

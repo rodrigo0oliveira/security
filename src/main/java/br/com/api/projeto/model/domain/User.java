@@ -18,6 +18,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,10 +28,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "tb_users")
 @Data
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User implements UserDetails{
+public class User implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
 
