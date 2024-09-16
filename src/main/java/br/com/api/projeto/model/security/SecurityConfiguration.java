@@ -36,6 +36,10 @@ public class SecurityConfiguration {
 			
 	};
 	
+	private static final String [] ENDPOINTS_ROOM_ROLEADMIN = {
+			"/security/room/create"
+	};
+	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
 			"/security/test/needAdmin"
 	};
@@ -58,6 +62,7 @@ public class SecurityConfiguration {
          .authorizeHttpRequests(authorize -> authorize
                  .requestMatchers(ENDPOINTS_LIBERADOS).permitAll()
                  .requestMatchers(ENDPOINTS_RESTRITOS_ADMIN).hasAuthority("ROLE_ADMIN")
+                 .requestMatchers(ENDPOINTS_ROOM_ROLEADMIN).hasAuthority("ROLE_ADMIN")
                  .anyRequest().authenticated())
          .sessionManagement(session -> session
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

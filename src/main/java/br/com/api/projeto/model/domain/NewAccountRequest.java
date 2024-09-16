@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public  abstract  class NewAccountRequest {
+public  class NewAccountRequest {
 	
 	private String name;
 	

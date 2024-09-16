@@ -27,14 +27,26 @@ import lombok.Setter;
 public class Room {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "id")
 	private String id;
+	
+	@Column(name = "roomNumber",unique = true)
+	private String roomNumber;
 	
 	@Column(name = "dailyPrice")
 	private BigDecimal dailyPrice;
 	
 	@Column(name = "status")
 	private Status status;
+
+	public Room(String roomNumber, BigDecimal dailyPrice) {
+		this.roomNumber = roomNumber;
+		this.dailyPrice = dailyPrice;
+	}
+	
+	
+	
+	
 
 }
