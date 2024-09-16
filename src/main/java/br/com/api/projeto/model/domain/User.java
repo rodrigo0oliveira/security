@@ -97,6 +97,7 @@ public class User implements UserDetails{
 		return "{" +
                 "\"id\":\"" + id+ "\"," +
                 "\"username\":\"" + username + "\"," +
+                "\"document\":\""+ document+ "\","+
                 "\"roles\":" + roles.toString() +
                 "}";
 	}
