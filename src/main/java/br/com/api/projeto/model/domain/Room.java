@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import br.com.api.projeto.model.domain.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,6 +39,7 @@ public class Room {
 	@Column(name = "dailyPrice")
 	private BigDecimal dailyPrice;
 	
+	
 	@Column(name = "status")
 	private Status status;
 
@@ -44,6 +47,13 @@ public class Room {
 		this.roomnumber = roomNumber;
 		this.dailyPrice = dailyPrice;
 	}
+
+	public Room(String roomnumber, BigDecimal dailyPrice, Status status) {
+		this.dailyPrice = dailyPrice;
+		this.status = status;
+	}
+	
+	
 	
 	
 	

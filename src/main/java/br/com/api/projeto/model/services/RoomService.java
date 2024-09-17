@@ -33,5 +33,22 @@ public class RoomService {
 		List<Room> list = roomRepository.findAll();
 		return list;
 	}
+	
+	public String editRoom(Room room) {
+		Room getRoom = roomRepository.findByroomnumber(room.getRoomnumber());
+		if(!getRoom.equals(null)) {
+			return "Quarto não encontrado";
+		}
+		editRoomInformation(getRoom, room);
+		roomRepository.save(getRoom);
+		
+		return "Quarto atualizado";
+	}
+	
+	private void editRoomInformation(Room origin,Room edit) {
+		origin.setDailyPrice(edit.getDailyPrice());
+		origin.setStatus(edit.getStatus());
+		
+	}
 
 }

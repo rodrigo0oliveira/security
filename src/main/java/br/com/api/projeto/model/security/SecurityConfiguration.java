@@ -37,7 +37,8 @@ public class SecurityConfiguration {
 	
 	private static final String [] ENDPOINTS_ROOM_ROLEADMIN = {
 			"/security/room/create",
-			"/security/room/delete/**"
+			"/security/room/delete/**",
+			"/security/room/edit"
 	};
 	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
