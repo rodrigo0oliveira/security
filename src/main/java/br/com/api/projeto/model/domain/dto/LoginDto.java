@@ -1,4 +1,4 @@
-package br.com.api.projeto.model.domain;
+package br.com.api.projeto.model.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LoginRequest {
+public class LoginDto {
 
 	private String username;
-	
+
 	private String password;
+
 }

@@ -1,4 +1,4 @@
-package br.com.api.projeto.model.domain;
+package br.com.api.projeto.model.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public  class NewAccountRequest {
+public class RegisterDto {
 	
 	private String name;
 	
@@ -16,6 +16,5 @@ public  class NewAccountRequest {
 	private String document;
 	
 	private String roleName;
-	
 
 }
