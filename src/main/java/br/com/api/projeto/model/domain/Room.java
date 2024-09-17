@@ -31,8 +31,8 @@ public class Room {
 	@Column(name = "id")
 	private String id;
 	
-	@Column(name = "roomNumber",unique = true)
-	private String roomNumber;
+	@Column(name = "roomnumber",unique = true)
+	private String roomnumber;
 	
 	@Column(name = "dailyPrice")
 	private BigDecimal dailyPrice;
@@ -41,7 +41,7 @@ public class Room {
 	private Status status;
 
 	public Room(String roomNumber, BigDecimal dailyPrice) {
-		this.roomNumber = roomNumber;
+		this.roomnumber = roomNumber;
 		this.dailyPrice = dailyPrice;
 	}
 	

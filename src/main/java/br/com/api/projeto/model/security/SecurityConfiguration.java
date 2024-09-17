@@ -33,15 +33,19 @@ public class SecurityConfiguration {
 			"/security/auth/signup",
 			"/security/auth/login",
 			"/security/test/free"
-			
 	};
 	
 	private static final String [] ENDPOINTS_ROOM_ROLEADMIN = {
-			"/security/room/create"
+			"/security/room/create",
+			"/security/room/delete/**"
 	};
 	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
 			"/security/test/needAdmin"
+	};
+	
+	private static final String [] ENDPOINTS_PRECISA_LOGIN = {
+			"/security/room/findAll"
 	};
 	
 	@Bean
