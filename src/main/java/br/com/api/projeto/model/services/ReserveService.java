@@ -14,6 +14,7 @@ import br.com.api.projeto.model.domain.Reserve;
 import br.com.api.projeto.model.domain.Room;
 import br.com.api.projeto.model.domain.User;
 import br.com.api.projeto.model.domain.dto.NewReserveDto;
+import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.repository.ReserveRepository;
 import br.com.api.projeto.model.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class ReserveService {
 			
 			Room room =  roomRepository.findByroomnumber(reserve.getRoomnumber());
 			
+			
 			LocalDate checkinDate = LocalDate.parse(reserve.getCheckin(), df);
 			LocalDate checkoutDate = LocalDate.parse(reserve.getCheckout(),df);
 			
@@ -50,7 +52,10 @@ public class ReserveService {
 					.user(user)
 					.build();
 			
-			reserveRepository.save(newReserve);				
+			room.setStatus(Status.EMRESERVA);
+			roomRepository.save(room);
+			reserveRepository.save(newReserve);		
+			
 			
 			return "Reserva criada";
 			

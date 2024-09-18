@@ -48,7 +48,8 @@ public class RoomService {
 	private void editRoomInformation(Room origin,Room edit) {
 		origin.setDailyPrice(edit.getDailyPrice());
 		origin.setStatus(edit.getStatus());
-		
 	}
+	
+	
 
 }
