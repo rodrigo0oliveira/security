@@ -2,6 +2,8 @@ package br.com.api.projeto.model.domain;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,11 +43,15 @@ public class Reserve {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@JsonIgnoreProperties({"id","password","document","roles","authorities",
+		"accountNonExpired","accountNonLocked","credentialsNonExpired",
+		"enabled"})
 	private User user;
 	
 	
 	@ManyToOne
 	@JoinColumn(name = "room_id")
+	@JsonIgnoreProperties({"id","status"})
 	private Room room;
 
 }

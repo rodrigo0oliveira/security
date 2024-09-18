@@ -43,7 +43,8 @@ public class SecurityConfiguration {
 	};
 	
 	private static final String [] ENDPOINTS_RESERVE_ROLE_GUEST= {
-			"security/reserve/create"
+			"/security/reserve/create",
+			"/security/reserve/findAll/me"
 	};
 	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {

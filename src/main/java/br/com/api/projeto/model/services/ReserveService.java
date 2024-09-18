@@ -68,12 +68,21 @@ public class ReserveService {
 	
 	public List<Reserve> findAllReserves(){
 		List<Reserve> list = reserveRepository.findAll();
+		return list;	
+	}
+	
+	public List<Reserve> findAllReservesByUser(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = authService.getUser(authentication);
+		List<Reserve> list = reserveRepository.findAllReservesByUserId(user.getId());
+		
 		return list;
-}
+		
+	}
 	
 	private void  verifyDates(LocalDate checkin,LocalDate checkout,String id) {
 		
-		List<Reserve> list = reserveRepository.verifyDates(id);
+		List<Reserve> list = reserveRepository.findAllReservesByRoomId(id);
 		
 		list = list.stream().filter(l->l.getCheckin().isBefore(checkout)&& l.getCheckout().isAfter(checkin)).collect(Collectors.toList());
 		

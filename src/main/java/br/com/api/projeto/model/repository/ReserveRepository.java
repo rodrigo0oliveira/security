@@ -11,6 +11,8 @@ import br.com.api.projeto.model.domain.Reserve;
 public interface ReserveRepository extends JpaRepository<Reserve, String>{
 	
 	 @Query("SELECT u FROM Reserve u WHERE u.room.id = :roomId")
-	   List<Reserve> verifyDates(@Param("roomId") String roomId);
-
+	  List<Reserve> findAllReservesByRoomId(@Param("roomId") String roomId);
+	 
+	 @Query("select u from Reserve u where u.user.id = :userId")
+	 List<Reserve> findAllReservesByUserId(@Param("userId") String id);
 }

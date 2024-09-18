@@ -36,5 +36,14 @@ public class ReserveController {
 		}
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
+	
+	@GetMapping("findAll/me")
+	public ResponseEntity<?> findAllReservesByUserAuthenticated(){
+		List<Reserve> list = reserveService.findAllReservesByUser();
+		if(list.isEmpty()) {
+			return new ResponseEntity<>("Não existe nenhuma reserva cadastrada em seu nome!",HttpStatus.FOUND);
+		}
+		return new ResponseEntity<>(list,HttpStatus.OK);
+	}
 
 }
