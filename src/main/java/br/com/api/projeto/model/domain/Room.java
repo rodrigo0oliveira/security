@@ -2,9 +2,12 @@ package br.com.api.projeto.model.domain;
 
 import java.math.BigDecimal;
 
+import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,6 +43,9 @@ public class Room {
 	
 	@Column(name = "status")
 	private Status status;
+	
+	@Enumerated(EnumType.STRING)
+	private RoomType roomType;
 
 	public Room(String roomNumber, BigDecimal dailyPrice) {
 		this.roomnumber = roomNumber;
