@@ -41,6 +41,10 @@ public class SecurityConfiguration {
 			"/security/room/edit"
 	};
 	
+	private static final String [] ENDPOINTS_RESERVE_ROLE_GUEST= {
+			"security/reserve/create"
+	};
+	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
 			"/security/test/needAdmin"
 	};
@@ -66,6 +70,7 @@ public class SecurityConfiguration {
          .disable()
          .authorizeHttpRequests(authorize -> authorize
                  .requestMatchers(ENDPOINTS_LIBERADOS).permitAll()
+                 .requestMatchers(ENDPOINTS_RESERVE_ROLE_GUEST).hasAuthority("ROLE_GUEST")
                  .requestMatchers(ENDPOINTS_RESTRITOS_ADMIN).hasAuthority("ROLE_ADMIN")
                  .requestMatchers(ENDPOINTS_ROOM_ROLEADMIN).hasAuthority("ROLE_ADMIN")
                  .anyRequest().authenticated())

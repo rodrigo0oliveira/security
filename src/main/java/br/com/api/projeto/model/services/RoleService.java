@@ -16,8 +16,7 @@ public class RoleService {
 	private final IRolesRepository IrolesRepository;
 	
 	public Roles getRoleByName(String name) {
-		name = "ROLE_"+name;
-		Roles role = IrolesRepository.findByName(name).orElse(null);
+		Roles role = IrolesRepository.findByName("ROLE_"+name).orElse(null);
 		if(Objects.isNull(role)) {
 			return IrolesRepository.save(Roles.builder()
                     .id(UUID.randomUUID().toString())

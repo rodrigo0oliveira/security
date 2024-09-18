@@ -28,7 +28,7 @@ import lombok.Setter;
 public class Reserve {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name = "id")
 	private String id;
 	

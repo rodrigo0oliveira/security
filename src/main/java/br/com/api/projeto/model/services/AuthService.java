@@ -1,12 +1,14 @@
 package br.com.api.projeto.model.services;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +60,15 @@ public class AuthService {
 		catch (Exception e) {
 			throw new Exception("Erro ao autenticar: "+e.getMessage());
 		}
+	}
+	
+	
+	public User getUser(Authentication authentication) {
+		String id = authentication.getName();
+		Optional<User> user = userRepository.findById(id);
+		
+		return user.orElseThrow(()-> new UsernameNotFoundException("Usuário não encontrado"));
+		
 	}
 	
 	
