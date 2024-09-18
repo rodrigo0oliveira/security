@@ -38,7 +38,8 @@ public class SecurityConfiguration {
 	private static final String [] ENDPOINTS_ROOM_ROLEADMIN = {
 			"/security/room/create",
 			"/security/room/delete/**",
-			"/security/room/edit"
+			"/security/room/edit",
+			"/security/reserve/findAll"
 	};
 	
 	private static final String [] ENDPOINTS_RESERVE_ROLE_GUEST= {

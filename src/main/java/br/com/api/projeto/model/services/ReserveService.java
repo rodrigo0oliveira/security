@@ -66,6 +66,11 @@ public class ReserveService {
 	
 	}
 	
+	public List<Reserve> findAllReserves(){
+		List<Reserve> list = reserveRepository.findAll();
+		return list;
+}
+	
 	private void  verifyDates(LocalDate checkin,LocalDate checkout,String id) {
 		
 		List<Reserve> list = reserveRepository.verifyDates(id);
