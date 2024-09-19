@@ -39,7 +39,8 @@ public class SecurityConfiguration {
 			"/security/room/create",
 			"/security/room/delete/**",
 			"/security/room/edit",
-			"/security/reserve/findAll"
+			"/security/reserve/findAll",
+			"/security/reserve/delete/{id}"
 	};
 	
 	private static final String [] ENDPOINTS_RESERVE_ROLE_GUEST= {

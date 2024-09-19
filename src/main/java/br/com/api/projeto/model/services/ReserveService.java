@@ -96,5 +96,10 @@ public class ReserveService {
 		}
 	}
 	
+	public  String deleteReserveById(String id) {
+		 reserveRepository.deleteById(id);
+		 return "Reserva excluída";
+	}
+	
 
 }
