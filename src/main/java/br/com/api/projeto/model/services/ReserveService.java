@@ -92,7 +92,8 @@ public class ReserveService {
 	
 		
 		if(!list.isEmpty()) {
-			throw new RuntimeException("A data selecionada não está disponível para reserva");
+			throw new RuntimeException("Esse intervalo de  data selecionada não está disponível para reserva - "+list.get(0).getCheckin()
+			+" - "+list.get(0).getCheckout());
 		}
 	}
 	
