@@ -45,7 +45,7 @@ public class Room {
 	private Status status;
 	
 	@Enumerated(EnumType.STRING)
-	private RoomType roomType;
+	private RoomType roomtype;
 
 	public Room(String roomNumber, BigDecimal dailyPrice) {
 		this.roomnumber = roomNumber;

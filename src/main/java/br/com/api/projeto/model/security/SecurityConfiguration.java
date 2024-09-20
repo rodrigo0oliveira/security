@@ -32,15 +32,6 @@ public class SecurityConfiguration {
 	private static final String [] ENDPOINTS_LIBERADOS = {
 			"/security/auth/signup",
 			"/security/auth/login",
-			"/security/test/free"
-	};
-	
-	private static final String [] ENDPOINTS_ROOM_ROLEADMIN = {
-			"/security/room/create",
-			"/security/room/delete/**",
-			"/security/room/edit",
-			"/security/reserve/findAll",
-			"/security/reserve/delete/{id}"
 	};
 	
 	private static final String [] ENDPOINTS_RESERVE_ROLE_GUEST= {
@@ -49,11 +40,18 @@ public class SecurityConfiguration {
 	};
 	
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
-			"/security/test/needAdmin"
+			//room
+			"/security/room/create",
+			"/security/room/edit",
+			"/security/room/findAll",
+			//reserve
+			"/security/reserve/findAll",
+			"/security/reserve/delete/{id}",
+			
 	};
 	
 	private static final String [] ENDPOINTS_PRECISA_LOGIN = {
-			"/security/room/findAll"
+			"/security/room/findAll/auth"
 	};
 	
 	@Bean
@@ -75,7 +73,7 @@ public class SecurityConfiguration {
                  .requestMatchers(ENDPOINTS_LIBERADOS).permitAll()
                  .requestMatchers(ENDPOINTS_RESERVE_ROLE_GUEST).hasAuthority("ROLE_GUEST")
                  .requestMatchers(ENDPOINTS_RESTRITOS_ADMIN).hasAuthority("ROLE_ADMIN")
-                 .requestMatchers(ENDPOINTS_ROOM_ROLEADMIN).hasAuthority("ROLE_ADMIN")
+                 .requestMatchers(ENDPOINTS_PRECISA_LOGIN).authenticated()
                  .anyRequest().authenticated())
          .sessionManagement(session -> session
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
