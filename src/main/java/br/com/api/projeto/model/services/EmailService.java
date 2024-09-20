@@ -2,6 +2,7 @@ package br.com.api.projeto.model.services;
 
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.mail.Authenticator;
@@ -14,12 +15,16 @@ import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
+	
+	@Value("${email.username}")
+	private String usernameEmail;
+	
+	@Value("${email.password}")
+	private String passwordEmail;
 
 	public String sendEmail(String destiny,String user) {
 		
 		String host = "smtp.gmail.com";
-		final String username = "rodrigodevfac@gmail.com";
-		final String password = "eety eumh ivoj xmao";
 
 		Properties properties = new Properties();
 		properties.put("mail.smtp.auth", "true");
@@ -29,13 +34,13 @@ public class EmailService {
 		
 		 Session session = Session.getInstance(properties, new Authenticator() {
 	         protected PasswordAuthentication getPasswordAuthentication() {
-	             return new PasswordAuthentication(username, password);
+	             return new PasswordAuthentication(usernameEmail, passwordEmail);
 	         }
 	     });
 		 
 		 try {
 			 Message message = new MimeMessage(session);
-			 message.setFrom(new InternetAddress(username));
+			 message.setFrom(new InternetAddress(usernameEmail));
 			 message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(destiny));
 			 message.setSubject("Cadastro");
 			 message.setText("Bem-vindo(a) "+user+", se você recebeu esse e-mail significa que seu cadastro foi concluido!");
