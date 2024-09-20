@@ -2,6 +2,7 @@ package br.com.api.projeto.model.domain.dto;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -14,10 +15,12 @@ import lombok.NoArgsConstructor;
 public class RegisterDto {
 	
 	@NotBlank
+	@Column(unique = true)
 	private String username;
 	
 	@Email
 	@NotBlank
+	@Column(unique = true)
 	private String email;
 	
 	@NotBlank
@@ -25,6 +28,7 @@ public class RegisterDto {
 	
 	@NotBlank
 	@CPF
+	@Column(unique = true)
 	private String document;
 	
 	@NotBlank
