@@ -36,7 +36,8 @@ public class AuthService {
 		
 		User user = User.builder()
 				.id(UUID.randomUUID().toString())
-				.username(request.getName())
+				.username(request.getUsername())
+				.email(request.getEmail())
 				.password(password)
 				.document(request.getDocument())
 						.roles(Collections.singletonList(roleService.getRoleByName(request.getRoleName()))).build();

@@ -11,6 +11,7 @@ import br.com.api.projeto.model.domain.dto.LoginDto;
 import br.com.api.projeto.model.domain.dto.RegisterDto;
 import br.com.api.projeto.model.security.TokenResponse;
 import br.com.api.projeto.model.services.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,13 +22,13 @@ public class AuthController {
 	private final AuthService authService;
 	
 	@PostMapping("/signup")
-	public ResponseEntity<String> createAccount(@RequestBody RegisterDto request){
+	public ResponseEntity<String> createAccount(@Valid @RequestBody RegisterDto request){
 		authService.createAccount(request);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<TokenResponse> login(@RequestBody LoginDto login) throws Exception{
+	public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginDto login) throws Exception{
 			TokenResponse tokenResponse = authService.login(login);
 			return new ResponseEntity<>(tokenResponse,(HttpStatus.CREATED));
 	}

@@ -2,6 +2,7 @@ package br.com.api.projeto.model.domain;
 
 import java.util.Collection;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,6 +16,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,13 +41,22 @@ public class User implements UserDetails{
 	@Column(name = "user_id")
 	private String id;
 	
-	@Column(name = "username")
+	@Column(name = "email",unique = true)
+	@Email
+	@NotBlank
+	private String email;
+	
+	@Column(name = "username",unique = true)
+	@NotBlank
 	private String username;
 	
 	@Column(name = "password")
+	@NotBlank
 	private String password;
 	
-	@Column(name = "document")
+	@Column(name = "document",unique = true)
+	@CPF
+	@NotBlank
 	private String document;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
