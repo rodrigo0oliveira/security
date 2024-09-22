@@ -32,6 +32,7 @@ public class SecurityConfiguration {
 	private static final String [] ENDPOINTS_LIBERADOS = {
 			"/security/auth/signup",
 			"/security/auth/login",
+			"/security/auth/changepassword/{username}"
 	};
 	
 	private static final String [] ENDPOINTS_RESERVE_ROLE_GUEST= {

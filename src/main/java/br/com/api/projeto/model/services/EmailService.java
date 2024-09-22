@@ -54,6 +54,39 @@ public class EmailService {
 
 	}
 	
+	public String changePassword(String email,String user,String password) {
+		
+		String host = "smtp.gmail.com";
+
+		Properties properties = new Properties();
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.host", host);
+		properties.put("mail.smtp.port", "587");
+		
+		 Session session = Session.getInstance(properties, new Authenticator() {
+	         protected PasswordAuthentication getPasswordAuthentication() {
+	             return new PasswordAuthentication(usernameEmail, passwordEmail);
+	         }
+	     });
+		 try {
+			 Message message = new MimeMessage(session);
+			 message.setFrom(new InternetAddress(usernameEmail));
+			 message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(email));
+			 message.setSubject("Redefinição de senha");
+			 message.setText("Você solicitou a redefinição de senha, essa é a sua nova senha "+password+
+					 "\n Não compartilhe-a com ninguém!");
+			 
+			 Transport.send(message);
+			 return "Foi enviado uma mensagem para o seu e-mail "+email;
+		 }catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
+	
 	
 
 

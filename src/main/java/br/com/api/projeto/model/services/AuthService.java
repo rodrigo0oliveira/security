@@ -1,5 +1,6 @@
 package br.com.api.projeto.model.services;
 
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +19,7 @@ import br.com.api.projeto.model.domain.dto.RegisterDto;
 import br.com.api.projeto.model.repository.UserRepository;
 import br.com.api.projeto.model.security.TokenProvider;
 import br.com.api.projeto.model.security.TokenResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -29,9 +31,10 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authenticationManager;
 	private final TokenProvider provider;
+	private final EmailService emailService;
 	
 	
-	public void createAccount(RegisterDto request) {
+	public String createAccount(RegisterDto request) {
 		String password = passwordEncoder.encode(request.getPassword());
 		
 		User user = User.builder()
@@ -43,7 +46,9 @@ public class AuthService {
 						.roles(Collections.singletonList(roleService.getRoleByName(request.getRoleName()))).build();
 						
 		
-		userRepository.save(user);		
+		userRepository.save(user);
+		
+		return  "Conta criada";
 	}
 	
 
@@ -69,6 +74,39 @@ public class AuthService {
 		Optional<User> user = userRepository.findById(id);
 		
 		return user.orElseThrow(()-> new UsernameNotFoundException("Usuário não encontrado"));
+		
+	}
+	
+	@Transactional
+	public String changePassword(String username) {
+		Optional<User> user = userRepository.findByusername(username);
+		if(user.isEmpty()) {
+			return "E-mail não encontrado";
+		}
+		String newPassword = generateRandomPassoword();
+		user.get().setPassword(newPassword);
+		userRepository.save(user.get());
+		String message = emailService.changePassword(user.get().getEmail(),user.get().getUsername(),newPassword);
+		return "Senha alterada \n"+message;
+	}
+	
+	private String generateRandomPassoword() {
+		
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+				+ "abcdefghyjklmnopqrstuvwxyz"
+				+ "1234567890";
+		
+		SecureRandom random = new SecureRandom();
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0 ;i<10;i++) {
+			int randomIndex = (random.nextInt(chars.length()));
+			sb.append(chars.charAt(randomIndex));
+		}
+		
+		String newPassword = sb.toString();
+		
+		return newPassword;
 		
 	}
 	
