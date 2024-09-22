@@ -42,6 +42,9 @@ public class AuthController {
 	@PutMapping("/changepassword/{username}")
 	public ResponseEntity<String> changePassword(@PathVariable String username){
 		String message = authService.changePassword(username);
+		if(message.startsWith("Usuário não encontrado")) {
+			return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(message,HttpStatus.OK);
 	}
 

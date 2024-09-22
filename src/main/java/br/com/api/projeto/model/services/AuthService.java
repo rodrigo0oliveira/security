@@ -81,7 +81,7 @@ public class AuthService {
 	public String changePassword(String username) {
 		Optional<User> user = userRepository.findByusername(username);
 		if(user.isEmpty()) {
-			return "E-mail não encontrado";
+			return "Usuário não encontrado";
 		}
 		String newPassword = generateRandomPassoword();
 		user.get().setPassword(newPassword);
