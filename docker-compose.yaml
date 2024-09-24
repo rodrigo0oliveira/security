@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    image: project
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/poosecurity
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: poosecurity
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+   
