@@ -36,7 +36,7 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginDto login) throws Exception{
 			TokenResponse tokenResponse = authService.login(login);
-			return new ResponseEntity<>(tokenResponse,(HttpStatus.CREATED));
+			return new ResponseEntity<>(tokenResponse,(HttpStatus.OK));
 	}
 	
 	@PutMapping("/changepassword/{username}")
