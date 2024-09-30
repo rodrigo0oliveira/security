@@ -7,6 +7,7 @@
 ## Tecnologias utilizadas no projeto
 
 * Spring Web,Security,Starter Mail,Data Jpa
+* Lombok
 * Docker
 * PostgresSQL
 
