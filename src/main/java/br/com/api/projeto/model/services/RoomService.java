@@ -20,7 +20,7 @@ public class RoomService {
 
 	public void createRoom(Room room) {
 		Room roomBuilder = Room.builder().id(UUID.randomUUID().toString()).roomnumber(room.getRoomnumber())
-				.dailyPrice(room.getDailyPrice()).status(Status.DISPONÍVEL).build();
+				.dailyPrice(room.getDailyPrice()).status(Status.DISPONÍVEL).roomtype(room.getRoomtype()).build();
 
 		roomRepository.save(roomBuilder);
 

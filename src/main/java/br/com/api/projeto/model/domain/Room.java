@@ -47,13 +47,14 @@ public class Room {
 	@Enumerated(EnumType.STRING)
 	private RoomType roomtype;
 
-	public Room(String roomNumber, BigDecimal dailyPrice) {
+	public Room(String roomNumber, BigDecimal dailyPrice,RoomType roomtype) {
 		this.roomnumber = roomNumber;
 		this.dailyPrice = dailyPrice;
+		this.roomtype = roomtype;
 	}
 
-	public Room(String roomnumber, BigDecimal dailyPrice, Status status) {
-		this.dailyPrice = dailyPrice;
+	public Room(BigDecimal dailyPrice, Status status) {
+		this.dailyPrice = dailyPrice; 
 		this.status = status;
 	}
 	
