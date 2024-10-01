@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,9 +39,9 @@ public class RoomController {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@PutMapping("/edit")
-	public ResponseEntity<String> editRoom(@RequestBody Room room){
-		String message = roomService.editRoom(room);
+	@PutMapping("/edit/{roomnumber}")
+	public ResponseEntity<String> editRoom(@PathVariable String roomnumber,@RequestBody Room room){
+		String message = roomService.editRoom(roomnumber,room);
 		return new ResponseEntity<>(message,HttpStatus.OK);
 		
 	}

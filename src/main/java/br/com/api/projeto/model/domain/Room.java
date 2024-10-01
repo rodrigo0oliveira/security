@@ -53,9 +53,10 @@ public class Room {
 		this.roomtype = roomtype;
 	}
 
-	public Room(BigDecimal dailyPrice, Status status) {
+	public Room(RoomType roomtype,BigDecimal dailyPrice, Status status) {
 		this.dailyPrice = dailyPrice; 
 		this.status = status;
+		this.roomtype = roomtype;
 	}
 	
 	

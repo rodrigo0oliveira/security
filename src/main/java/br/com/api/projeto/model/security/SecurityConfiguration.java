@@ -43,7 +43,7 @@ public class SecurityConfiguration {
 	private static final String [] ENDPOINTS_RESTRITOS_ADMIN = {
 			//room
 			"/security/room/create",
-			"/security/room/edit",
+			"/security/room/edit/{roomnumber}",
 			"/security/room/findAll",
 			//reserve
 			"/security/reserve/findAll",

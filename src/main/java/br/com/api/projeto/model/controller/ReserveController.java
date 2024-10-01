@@ -39,7 +39,7 @@ public class ReserveController {
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
-	@GetMapping("findAll/me")
+	@GetMapping("/findAll/me")
 	public ResponseEntity<?> findAllReservesByUserAuthenticated(){
 		List<Reserve> list = reserveService.findAllReservesByUser();
 		if(list.isEmpty()) {
@@ -48,7 +48,7 @@ public class ReserveController {
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteReserveById(@PathVariable String id){
 		String message = reserveService.deleteReserveById(id);
 		return new ResponseEntity<>(message,HttpStatus.NO_CONTENT);
