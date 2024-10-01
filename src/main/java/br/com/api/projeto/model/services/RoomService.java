@@ -45,6 +45,7 @@ public class RoomService {
 	private void editRoomInformation(Room origin, Room edit) {
 		origin.setDailyPrice(edit.getDailyPrice());
 		origin.setStatus(edit.getStatus());
+		origin.setRoomtype(edit.getRoomtype());
 	}
 
 	public List<RoomDto> findAllRoomToUserAuthenticate() {

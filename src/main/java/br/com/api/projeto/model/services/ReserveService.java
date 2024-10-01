@@ -38,6 +38,10 @@ public class ReserveService {
 			
 			Room room =  roomRepository.findByroomnumber(reserve.getRoomnumber());
 			
+			if(room==null) {
+				return "Quarto não encontrado";
+			}
+			
 			
 			LocalDate checkinDate = LocalDate.parse(reserve.getCheckin(), df);
 			LocalDate checkoutDate = LocalDate.parse(reserve.getCheckout(),df);
