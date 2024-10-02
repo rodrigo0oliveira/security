@@ -26,8 +26,8 @@ public class RoomController {
 	
 	@PostMapping("/create")
 	public ResponseEntity<String> createRoom(@RequestBody Room room){
-		roomService.createRoom(room);
-		return new ResponseEntity<>("Quarto criado",HttpStatus.CREATED);
+		String message = roomService.createRoom(room);
+		return new ResponseEntity<>(message,HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/findAll")
