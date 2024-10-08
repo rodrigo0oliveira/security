@@ -3,6 +3,7 @@ package br.com.api.projeto.model.exceptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,14 @@ public class GlobalExceptionHandler {
 		error.put("message: ", exception.getCause().getMessage().describeConstable());
 		
 		return new ResponseEntity<>(error,HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<Map<String,Object>> constraintViolationException(ConstraintViolationException exception){
+		Map<String,Object> error = new HashMap<>();
+		error.put("Status",HttpStatus.BAD_REQUEST);
+		error.put("Error: ","Todos os valores precisam ser informados,algum campo informado e nulo!");
+
+		return new ResponseEntity<>(error,(HttpStatus.BAD_REQUEST));
 	}
 }

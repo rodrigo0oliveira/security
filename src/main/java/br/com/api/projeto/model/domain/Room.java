@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,16 +36,20 @@ public class Room {
 	private String id;
 	
 	@Column(name = "roomnumber",unique = true)
+	@NotNull
 	private String roomnumber;
 	
 	@Column(name = "dailyPrice")
+	@NotNull
 	private BigDecimal dailyPrice;
 	
 	
 	@Column(name = "status")
+	@NotNull
 	private Status status;
 	
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private RoomType roomtype;
 
 	public Room(String roomNumber, BigDecimal dailyPrice,RoomType roomtype) {
