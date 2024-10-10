@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,6 @@ public class ReserveService {
 	public static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	
 	public String createReserve(NewReserveDto reserve){
-		
-		try {
 			
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			User user = authService.getUser(authentication);
@@ -41,8 +41,7 @@ public class ReserveService {
 			if(room==null) {
 				return "Quarto não encontrado";
 			}
-			
-			
+
 			LocalDate checkinDate = LocalDate.parse(reserve.getCheckin(), df);
 			LocalDate checkoutDate = LocalDate.parse(reserve.getCheckout(),df);
 			
@@ -62,11 +61,6 @@ public class ReserveService {
 			
 			
 			return "Reserva criada";
-			
-		}catch (RuntimeException e) {
-			return e.getMessage();
-		}
-		
 	
 	}
 	
@@ -84,7 +78,7 @@ public class ReserveService {
 		
 	}
 	
-	private void  verifyDates(LocalDate checkin,LocalDate checkout,String id) {
+	public void  verifyDates(LocalDate checkin,LocalDate checkout,String id) {
 		
 		List<Reserve> list = reserveRepository.findAllReservesByRoomId(id);
 		

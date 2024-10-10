@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,14 +36,17 @@ public class Reserve {
 	private String id;
 	
 	@Column(name = "checkin")
+	@NotNull
 	private LocalDate checkin;
 	
 	@Column(name = "checkout")
+	@NotNull
 	private LocalDate checkout;
 	
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@NotNull
 	@JsonIgnoreProperties({"id","password","document","roles","authorities",
 		"accountNonExpired","accountNonLocked","credentialsNonExpired",
 		"enabled"})
@@ -52,6 +56,7 @@ public class Reserve {
 	@ManyToOne
 	@JoinColumn(name = "room_id")
 	@JsonIgnoreProperties({"id","status"})
+	@NotNull
 	private Room room;
 
 }

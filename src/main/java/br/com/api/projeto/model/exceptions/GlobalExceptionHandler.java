@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.constraints.Null;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +42,16 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<Map<String,Object>> constraintViolationException(ConstraintViolationException exception){
-		Map<String,Object> error = new HashMap<>();
-		error.put("Status",HttpStatus.BAD_REQUEST);
-		error.put("Error: ","Todos os valores precisam ser informados,algum campo informado e nulo!");
+	public ResponseEntity<String> constraintViolationException(ConstraintViolationException exception){
+		String message = "Error: Todos os valores precisam ser preenchidos,algum valor informado e nulo";
 
-		return new ResponseEntity<>(error,(HttpStatus.BAD_REQUEST));
+		return new ResponseEntity<>(message,(HttpStatus.BAD_REQUEST));
+	}
+
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<String> nullPointerException(NullPointerException exception){
+		String message = "Error : Algum valor informado e nulo!";
+
+		return new ResponseEntity<>(message,HttpStatus.BAD_REQUEST);
 	}
 }
