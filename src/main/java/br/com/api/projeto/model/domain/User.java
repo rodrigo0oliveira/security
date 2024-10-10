@@ -2,6 +2,7 @@ package br.com.api.projeto.model.domain;
 
 import java.util.Collection;
 
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,7 +44,7 @@ public class User implements UserDetails{
 	
 	@Column(name = "email",unique = true)
 	@Email
-	@NotBlank
+	@NotNull
 	private String email;
 	
 	@Column(name = "username",unique = true)

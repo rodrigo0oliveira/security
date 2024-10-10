@@ -44,7 +44,7 @@ public class RoomService {
 		return "Quarto atualizado";
 	}
 
-	private void editRoomInformation(Room origin, Room edit) {
+	public void editRoomInformation(Room origin, Room edit) {
 		origin.setDailyPrice(edit.getDailyPrice());
 		origin.setStatus(edit.getStatus());
 		origin.setRoomtype(edit.getRoomtype());
