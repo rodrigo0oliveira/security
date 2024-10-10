@@ -35,7 +35,7 @@ public class RoomService {
 
 	public String editRoom(String roomnumber,Room room) {
 		Room getRoom = roomRepository.findByroomnumber(roomnumber);
-		if (getRoom.equals(null)) {
+		if (getRoom==null) {
 			return "Quarto não encontrado";
 		}
 		editRoomInformation(getRoom, room);
@@ -44,7 +44,7 @@ public class RoomService {
 		return "Quarto atualizado";
 	}
 
-	private void editRoomInformation(Room origin, Room edit) {
+	public void editRoomInformation(Room origin, Room edit) {
 		origin.setDailyPrice(edit.getDailyPrice());
 		origin.setStatus(edit.getStatus());
 		origin.setRoomtype(edit.getRoomtype());
