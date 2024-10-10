@@ -132,7 +132,6 @@ class ReserveServiceTest {
         Assertions.assertEquals(expectedMessage,actualMessage);
 
     }
-
     @Test
     void testVerifyDatesShouldThrowRunTimeExceptionWhenDateAlreadyInReserve(){
 
