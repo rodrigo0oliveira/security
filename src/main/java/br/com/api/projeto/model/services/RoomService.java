@@ -35,7 +35,7 @@ public class RoomService {
 
 	public String editRoom(String roomnumber,Room room) {
 		Room getRoom = roomRepository.findByroomnumber(roomnumber);
-		if (getRoom.equals(null)) {
+		if (getRoom==null) {
 			return "Quarto não encontrado";
 		}
 		editRoomInformation(getRoom, room);
