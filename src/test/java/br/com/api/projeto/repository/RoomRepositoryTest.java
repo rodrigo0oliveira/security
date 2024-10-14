@@ -4,8 +4,8 @@ import br.com.api.projeto.model.domain.Room;
 import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.repository.RoomRepository;
-import static org.junit.Assert.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +41,8 @@ public class RoomRepositoryTest {
     void testFindByRoomnumberShouldReturnRoom(){
         Room actualRoom = roomRepository.findByroomnumber("4");
 
-        assertEquals(room.toString(),actualRoom.toString());
-        assertNotEquals(actualRoom.getId(),0);
+        Assertions.assertEquals(room.toString(), actualRoom.toString());
+        Assertions.assertNotEquals(actualRoom.getId(), 0);
 
     }
 
@@ -50,7 +50,7 @@ public class RoomRepositoryTest {
     void testFindByRoomNumberShouldReturnNull(){
         Room actualRoom = roomRepository.findByroomnumber("1");
 
-        assertEquals(null,actualRoom);
+        Assertions.assertNull(actualRoom);
 
     }
 

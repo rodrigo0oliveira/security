@@ -8,7 +8,9 @@ import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.repository.ReserveRepository;
 import br.com.api.projeto.model.repository.RoomRepository;
 import br.com.api.projeto.model.repository.UserRepository;
-import static org.junit.Assert.*;
+
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,8 +110,8 @@ public class ReserveRepositoryTest {
         reserveRepository.save(secondReserve);
         List<Reserve> list = reserveRepository.findAllReservesByRoomId(firtsReserve.getRoom().getId());
 
-        assertTrue(list.contains(firtsReserve));
-        assertEquals(list.get(0),firtsReserve);
+        Assertions.assertTrue(list.contains(firtsReserve));
+        Assertions.assertEquals(list.get(0), firtsReserve);
     }
 
     @Test
@@ -133,8 +135,8 @@ public class ReserveRepositoryTest {
 
         List<Reserve> list = reserveRepository.findAllReservesByUserId(firtsReserve.getUser().getId());
 
-        assertTrue(list.contains(firtsReserve));
-        assertFalse(list.contains(secondReserve));
+        Assertions.assertTrue(list.contains(firtsReserve));
+        Assertions.assertFalse(list.contains(secondReserve));
 
     }
 

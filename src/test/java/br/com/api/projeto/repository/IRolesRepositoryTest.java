@@ -2,7 +2,8 @@ package br.com.api.projeto.repository;
 
 import br.com.api.projeto.model.domain.Roles;
 import br.com.api.projeto.model.repository.IRolesRepository;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class IRolesRepositoryTest {
     void testFindByNameShouldReturnRole(){
         Roles newRole = iRolesRepository.findByName("ADMIN").get();
 
-        assertNotNull(newRole);
-        assertEquals(role,newRole);
+        Assertions.assertNotNull(newRole);
+        Assertions.assertEquals(role, newRole);
 
     }
 
@@ -44,6 +45,6 @@ public class IRolesRepositoryTest {
     void testFindByNameShouldReturnNull(){
         Optional<Roles> newRole = iRolesRepository.findByName("fail");
 
-        assertEquals(newRole,Optional.empty());
+        Assertions.assertEquals(newRole, Optional.empty());
     }
 }
