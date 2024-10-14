@@ -53,7 +53,7 @@ class ReserveServiceTest {
 
     Room room;
 
-    private static DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     @BeforeEach
     public void setup(){

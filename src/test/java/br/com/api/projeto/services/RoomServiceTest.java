@@ -6,7 +6,6 @@ import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.repository.RoomRepository;
 import br.com.api.projeto.model.services.RoomService;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +68,7 @@ public class RoomServiceTest {
        String actualMessage = roomService.editRoom("1",room);
        String expectedMessage = "Quarto não encontrado";
 
-        Assert.assertEquals(actualMessage,expectedMessage);
+        Assertions.assertEquals(actualMessage, expectedMessage);
 
     }
 
@@ -83,7 +82,7 @@ public class RoomServiceTest {
         String actualMessage = roomService.editRoom("1",room);
         String expectedMessage = "Quarto atualizado";
 
-        Assert.assertEquals(actualMessage,expectedMessage);
+        Assertions.assertEquals(actualMessage, expectedMessage);
 
     }
 
@@ -98,7 +97,7 @@ public class RoomServiceTest {
         RoomDto actual = list.get(0);
 
 
-        Assert.assertEquals(actual,expected);
+        Assertions.assertEquals(actual, expected);
 
     }
 

@@ -3,14 +3,12 @@ package br.com.api.projeto.services;
 import br.com.api.projeto.model.domain.Roles;
 import br.com.api.projeto.model.repository.IRolesRepository;
 import br.com.api.projeto.model.services.RoleService;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.management.relation.Role;
 
 import java.util.Optional;
 
@@ -33,7 +31,7 @@ public class RoleServiceTest {
 
         Roles newRole = roleService.getRoleByName(any(String.class));
 
-        Assert.assertEquals(roles.getName(),newRole.getName());
+        Assertions.assertEquals(roles.getName(), newRole.getName());
         verify(iRolesRepository).findByName(any(String.class));
         verifyNoMoreInteractions(iRolesRepository);
     }
@@ -47,7 +45,7 @@ public class RoleServiceTest {
 
         Roles newRole = roleService.getRoleByName(any(String.class));
 
-        Assert.assertEquals(roles.getName(),newRole.getName());
+        Assertions.assertEquals(roles.getName(), newRole.getName());
         verify(iRolesRepository).save(any(Roles.class));
         verify(iRolesRepository).findByName(any(String.class));
     }

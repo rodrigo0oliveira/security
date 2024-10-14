@@ -4,7 +4,6 @@ import br.com.api.projeto.model.domain.Roles;
 import br.com.api.projeto.model.domain.User;
 import br.com.api.projeto.model.domain.dto.LoginDto;
 import br.com.api.projeto.model.domain.dto.RegisterDto;
-import br.com.api.projeto.model.repository.IRolesRepository;
 import br.com.api.projeto.model.repository.UserRepository;
 import br.com.api.projeto.model.security.TokenProvider;
 import br.com.api.projeto.model.security.TokenResponse;
@@ -13,6 +12,7 @@ import br.com.api.projeto.model.services.EmailService;
 import br.com.api.projeto.model.services.RoleService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,9 +48,6 @@ public class AuthServiceTest {
 
     @Mock
     UserRepository userRepository;
-
-    @Mock
-    IRolesRepository iRolesRepository;
 
     @Mock
     TokenProvider tokenProvider;
@@ -103,7 +100,7 @@ public class AuthServiceTest {
         String actualMessage = authService.createAccount(registerDto);
         String expectedMessage = "Conta criada";
 
-        Assert.assertEquals(actualMessage,expectedMessage);
+        Assertions.assertEquals(actualMessage, expectedMessage);
 
     }
 
@@ -119,7 +116,7 @@ public class AuthServiceTest {
 
         TokenResponse actualToken = authService.login(loginDto);
 
-        Assert.assertEquals(tokenResponse,actualToken);
+        Assertions.assertEquals(tokenResponse, actualToken);
         verify(authenticationManager).authenticate(any(Authentication.class));
         verify(tokenProvider).generateToken(any(Authentication.class));
 
@@ -141,7 +138,7 @@ public class AuthServiceTest {
 
         String expectedMessage = "Credenciais inválidas";
 
-        Assert.assertEquals(expectedMessage,authenticationException.getMessage());
+        Assertions.assertEquals(expectedMessage, authenticationException.getMessage());
     }
 
     @Test
@@ -151,7 +148,7 @@ public class AuthServiceTest {
         String actualMessage = authService.changePassword(user.getUsername());
         String expectedMessage = "Usuário não encontrado";
 
-        Assert.assertEquals(actualMessage,expectedMessage);
+        Assertions.assertEquals(actualMessage, expectedMessage);
         verify(userRepository).findByusername(any(String.class));
     }
 
@@ -165,14 +162,14 @@ public class AuthServiceTest {
         String expectedMessage = "Senha alterada \n"+"";
         String actualMessage = authService.changePassword(user.getUsername());
 
-        Assert.assertEquals(expectedMessage,actualMessage);
+        Assertions.assertEquals(expectedMessage, actualMessage);
 
     }
 
     @Test
     void testGenerateRandomPassword(){
         String ramdomPassword = authService.generateRandomPassoword();
-        Assert.assertEquals(ramdomPassword.length(),10);
+        Assertions.assertEquals(ramdomPassword.length(), 10);
     }
 
 
