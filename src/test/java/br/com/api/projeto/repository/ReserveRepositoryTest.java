@@ -88,7 +88,7 @@ public class ReserveRepositoryTest {
 
 
     @Test
-    void testFindAllReservesByRoomId(){
+    void testFindAllReservesByRoomIdShouldReturnListReserve(){
 
         Reserve firtsReserve = Reserve.builder()
                 .room(firstRoom)
@@ -113,7 +113,7 @@ public class ReserveRepositoryTest {
     }
 
     @Test
-    void testFindAllReservesByUserId(){
+    void testFindAllReservesByUserIdShouldReturnListReserve(){
         Reserve firtsReserve = Reserve.builder()
                 .room(null)
                 .user(firstUser)
