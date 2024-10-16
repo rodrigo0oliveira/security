@@ -79,8 +79,6 @@ public class SecurityConfiguration{
                  .requestMatchers(ENDPOINTS_PRECISA_LOGIN).authenticated()
 				 .requestMatchers("/h2-console/**").permitAll()
                  .anyRequest().authenticated())
-				 .headers(headers -> headers.frameOptions().disable())
-				 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
          .sessionManagement(session -> session
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				 .addFilterBefore(new JWTFilter(tokenProvider),UsernamePasswordAuthenticationFilter.class)

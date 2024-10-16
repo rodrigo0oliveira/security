@@ -42,6 +42,9 @@ public class RoomController {
 	@PutMapping("/edit/{roomnumber}")
 	public ResponseEntity<String> editRoom(@PathVariable String roomnumber,@RequestBody Room room){
 		String message = roomService.editRoom(roomnumber,room);
+		if(message==null){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(message,HttpStatus.OK);
 		
 	}
