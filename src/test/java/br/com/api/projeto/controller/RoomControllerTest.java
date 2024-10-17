@@ -5,13 +5,16 @@ import br.com.api.projeto.model.domain.Room;
 import br.com.api.projeto.model.domain.dto.RoomDto;
 import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
+import br.com.api.projeto.model.security.SecurityConfiguration;
 import br.com.api.projeto.model.services.RoomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.h2.H2ConsoleProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 
