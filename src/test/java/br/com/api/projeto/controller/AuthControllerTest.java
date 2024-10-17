@@ -55,7 +55,7 @@ public class AuthControllerTest {
     @Test
     void testCreateAccountShouldReturnCreated() throws Exception {
         RegisterDto registerDto =
-                new RegisterDto("test","test@gmail","123","13334811441","ADMIN");
+                new RegisterDto("test","test@gmail","123","56676552507","ADMIN");
         when(authService.createAccount(registerDto)).thenReturn("Conta criada");
         when(emailService.sendEmail(registerDto.getEmail(),registerDto.getEmail())).thenReturn(null);
 
@@ -64,6 +64,38 @@ public class AuthControllerTest {
                 .content(objectMapper.writeValueAsString(registerDto)));
 
         response.andDo(print()).andExpect(status().isCreated());
+    }
+
+    @Test
+    void testCreateAccountWhenDocumentIsNotValidShouldReturnBadRequest() throws Exception {
+        RegisterDto registerDto =
+                new RegisterDto("test", "test@gmail", "123", "bad123", "ADMIN");
+        when(authService.createAccount(registerDto)).thenReturn(null);
+        when(emailService.sendEmail(registerDto.getEmail(), registerDto.getEmail())).thenReturn(null);
+
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/security/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(registerDto)));
+
+        response.andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testCreateAccountWhenSomethingValueIsNullShouldReturnBadRequest() throws Exception {
+        RegisterDto registerDto =
+                new RegisterDto(null,"test@gmail","123","56676552507","ADMIN");
+
+        when(authService.createAccount(registerDto)).thenReturn(null);
+        when(emailService.sendEmail(registerDto.getEmail(), registerDto.getEmail())).thenReturn(null);
+
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/security/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(registerDto)));
+
+        response.andDo(print())
+                .andExpect(status().isBadRequest());
+
     }
 
     @Test
