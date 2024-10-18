@@ -37,7 +37,7 @@ public class RoomController {
 	@ApiResponse(responseCode = "403",description = "Usuário não possui acesso ao recurso")
 	@ApiResponse(responseCode = "500",description = "Erro no servidor")
 	@PostMapping("/create")
-	public ResponseEntity<String> createRoom(@RequestBody Room room){
+	public ResponseEntity<String> createRoom(@RequestBody RoomDto room){
 		String message = roomService.createRoom(room);
 		return new ResponseEntity<>(message,HttpStatus.CREATED);
 	}

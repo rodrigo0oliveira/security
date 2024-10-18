@@ -50,8 +50,10 @@ public class RoomServiceTest {
 
         when(roomRepository.save(any(Room.class))).thenReturn(room);
 
+        RoomDto roomDto = new RoomDto("2",new BigDecimal("30"),RoomType.SOLTEIRO);
 
-        String message = roomService.createRoom(room);
+
+        String message = roomService.createRoom(roomDto);
         String expected = "Quarto criado";
 
         Assertions.assertEquals(message, expected);

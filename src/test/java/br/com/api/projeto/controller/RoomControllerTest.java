@@ -73,7 +73,7 @@ public class RoomControllerTest {
 
         String expectedMessage = "Quarto criado";
 
-        when(roomService.createRoom(any(Room.class))).thenReturn(expectedMessage);
+        when(roomService.createRoom(any(RoomDto.class))).thenReturn(expectedMessage);
 
         ResultActions response = mockMvc.perform(post("/security/room/create")
                 .contentType(MediaType.APPLICATION_JSON)
