@@ -3,6 +3,7 @@ package br.com.api.projeto.model.services;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -96,8 +97,15 @@ public class ReserveService {
 	}
 	
 	public  String deleteReserveById(String id) {
-		 reserveRepository.deleteById(id);
-		 return "Reserva excluída";
+		Optional<Reserve> reserve = reserveRepository.findById(id);
+
+		if(reserve.isPresent()){
+			reserveRepository.deleteById(id);
+			return "Reserva excluída";
+		}
+
+		return null;
+
 	}
 	
 

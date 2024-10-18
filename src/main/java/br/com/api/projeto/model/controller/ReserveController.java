@@ -43,7 +43,7 @@ public class ReserveController {
 	public ResponseEntity<?> findAllReservesByUserAuthenticated(){
 		List<Reserve> list = reserveService.findAllReservesByUser();
 		if(list.isEmpty()) {
-			return new ResponseEntity<>("Não existe nenhuma reserva cadastrada em seu nome!",HttpStatus.FOUND);
+			return new ResponseEntity<>("Não existe nenhuma reserva cadastrada em seu nome!",HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
@@ -51,6 +51,9 @@ public class ReserveController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteReserveById(@PathVariable String id){
 		String message = reserveService.deleteReserveById(id);
+		if(message==null){
+			return new ResponseEntity<>("Reserva nao encontrada",HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(message,HttpStatus.NO_CONTENT);
 	}
 
