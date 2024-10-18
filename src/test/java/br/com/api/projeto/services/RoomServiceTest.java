@@ -68,7 +68,7 @@ public class RoomServiceTest {
        String actualMessage = roomService.editRoom("1",room);
        String expectedMessage = "Quarto não encontrado";
 
-        Assertions.assertEquals(actualMessage, expectedMessage);
+       Assertions.assertEquals(actualMessage, expectedMessage);
 
     }
 

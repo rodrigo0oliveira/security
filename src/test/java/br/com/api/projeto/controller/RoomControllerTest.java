@@ -131,7 +131,7 @@ public class RoomControllerTest {
     @Test
     void testEditRoomWhenRoomNotExistShouldReturnNotFound() throws Exception {
         String message = "Quarto não encontrado";
-        when(roomService.editRoom("6",room)).thenReturn(null);
+        when(roomService.editRoom("6",room)).thenReturn(message);
 
         ResultActions response = mockMvc.perform(put("/security/room/edit/{roomnumber}",6)
                 .contentType(MediaType.APPLICATION_JSON)
