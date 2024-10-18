@@ -6,6 +6,7 @@ import br.com.api.projeto.model.domain.dto.RoomDto;
 import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.security.SecurityConfiguration;
+import br.com.api.projeto.model.security.TokenProvider;
 import br.com.api.projeto.model.services.RoomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,6 @@ import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -38,10 +38,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(RoomController.class)
 @WithMockUser(username = "user",authorities = {"ROLE_ADMIN"})
+@Import({SecurityConfiguration.class, H2ConsoleProperties.class})
 public class RoomControllerTest {
 
     @MockBean
     RoomService roomService;
+
+    @MockBean
+    TokenProvider tokenProvider;
 
     MockMvc mockMvc;
     ObjectMapper objectMapper;
@@ -72,7 +76,6 @@ public class RoomControllerTest {
         when(roomService.createRoom(any(Room.class))).thenReturn(expectedMessage);
 
         ResultActions response = mockMvc.perform(post("/security/room/create")
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(room)));
 
@@ -89,8 +92,7 @@ public class RoomControllerTest {
 
         when(roomService.findAll()).thenReturn(list);
 
-        ResultActions response = mockMvc.perform(get("/security/room/findAll")
-                .with(csrf()));
+        ResultActions response = mockMvc.perform(get("/security/room/findAll"));
 
         response.andExpect(status().isOk())
                 .andDo(print());
@@ -104,8 +106,7 @@ public class RoomControllerTest {
 
         when(roomService.findAll()).thenReturn(list);
 
-        ResultActions response = mockMvc.perform(get("/security/room/findAll")
-                .with(csrf()));
+        ResultActions response = mockMvc.perform(get("/security/room/findAll"));
 
         response.andDo(print())
                 .andExpect(status().isNotFound())
@@ -119,7 +120,6 @@ public class RoomControllerTest {
         when(roomService.editRoom("3",room)).thenReturn("Quarto atualizado");
 
         ResultActions response =  mockMvc.perform(put("/security/room/edit/{roomnumber}",3)
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(room)));
 
@@ -134,7 +134,6 @@ public class RoomControllerTest {
         when(roomService.editRoom("6",room)).thenReturn(null);
 
         ResultActions response = mockMvc.perform(put("/security/room/edit/{roomnumber}",6)
-                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(room)));
 
@@ -147,8 +146,7 @@ public class RoomControllerTest {
     void testFindAllToUserAuthenticatedWhenExistAnyRoomShouldReturnOk() throws Exception {
         when(roomService.findAllRoomToUserAuthenticate()).thenReturn(Arrays.asList(new RoomDto()));
 
-        ResultActions response = mockMvc.perform(get("/security/room/findAll/auth")
-                .with(csrf()));
+        ResultActions response = mockMvc.perform(get("/security/room/findAll/auth"));
 
         response.andDo(print())
                 .andExpect(status().isOk());
@@ -158,8 +156,7 @@ public class RoomControllerTest {
     void testFindAllToUserAuthenticatedWhenNotExistAnyRoomShouldReturnNotFound() throws Exception {
         when(roomService.findAllRoomToUserAuthenticate()).thenReturn(Arrays.asList());
 
-        ResultActions response = mockMvc.perform(get("/security/room/findAll/auth")
-                .with(csrf()));
+        ResultActions response = mockMvc.perform(get("/security/room/findAll/auth"));
 
         response.andDo(print())
                 .andExpect(status().isNotFound());
