@@ -1,5 +1,7 @@
 package br.com.api.projeto.model.security;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +26,10 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
+@SecurityScheme(name = SecurityConfiguration.SECURITY,type = SecuritySchemeType.HTTP,bearerFormat = "JWT",scheme = "bearer")
 public class SecurityConfiguration{
+
+	public static final String SECURITY = "bearerAuth";
 	
 	private final TokenProvider tokenProvider;
 
@@ -54,7 +59,7 @@ public class SecurityConfiguration{
 	private static final String [] ENDPOINTS_PRECISA_LOGIN = {
 			"/security/room/findAll/auth"
 	};
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -77,6 +82,7 @@ public class SecurityConfiguration{
                  .requestMatchers(ENDPOINTS_RESTRITOS_ADMIN).hasAuthority("ROLE_ADMIN")
                  .requestMatchers(ENDPOINTS_PRECISA_LOGIN).authenticated()
 				 .requestMatchers("/h2-console/**").permitAll()
+				 .requestMatchers("/api/v1/auth/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                  .anyRequest().authenticated())
          .sessionManagement(session -> session
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
