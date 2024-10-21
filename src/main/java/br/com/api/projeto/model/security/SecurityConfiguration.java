@@ -76,7 +76,6 @@ public class SecurityConfiguration{
 		 http.csrf()
          .disable()
          .authorizeHttpRequests(authorize -> authorize
-				 .requestMatchers(PathRequest.toH2Console()).permitAll()
                  .requestMatchers(ENDPOINTS_LIBERADOS).permitAll()
                  .requestMatchers(ENDPOINTS_RESERVE_ROLE_GUEST).hasAuthority("ROLE_GUEST")
                  .requestMatchers(ENDPOINTS_RESTRITOS_ADMIN).hasAuthority("ROLE_ADMIN")

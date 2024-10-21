@@ -1,5 +1,6 @@
 package br.com.api.projeto.repository;
 
+import br.com.api.projeto.integrationtest.testcontainers.AbstractIntegrationTest;
 import br.com.api.projeto.model.domain.User;
 import br.com.api.projeto.model.repository.UserRepository;
 
@@ -7,10 +8,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+
 @DataJpaTest
-public class UserRepositoryTest {
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class UserRepositoryTest extends AbstractIntegrationTest {
 
     UserRepository userRepository;
 
@@ -26,7 +30,7 @@ public class UserRepositoryTest {
         user = User.builder()
                 .roles(null)
                 .password("123")
-                .document("12345678911")
+                .document("28554308018")
                 .email("teste@gmail.com")
                 .username("teste")
                 .build();
@@ -44,7 +48,7 @@ public class UserRepositoryTest {
 
     @Test
     void testFindByDocumentShouldReturnUser(){
-        User getUser = userRepository.findBydocument("12345678911");
+        User getUser = userRepository.findBydocument("28554308018");
 
         Assertions.assertNotNull(getUser);
         Assertions.assertEquals(getUser, user);
