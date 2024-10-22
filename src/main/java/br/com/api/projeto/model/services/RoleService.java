@@ -17,12 +17,12 @@ public class RoleService {
 	
 	public Roles getRoleByName(String name) {
 		Roles role = IrolesRepository.findByName("ROLE_"+name).orElse(null);
-		if(Objects.isNull(role)) {
+		if(role==null) {
 			return IrolesRepository.save(Roles.builder()
                     .id(UUID.randomUUID().toString())
                     .name("ROLE_" + name)
             .build());
-					
+
 		}
 		return role;
 	}

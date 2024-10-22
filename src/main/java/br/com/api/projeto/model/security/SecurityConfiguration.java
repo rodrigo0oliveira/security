@@ -1,8 +1,10 @@
 package br.com.api.projeto.model.security;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,21 +15,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.api.projeto.model.exceptions.CustomAcessDeniedHandler;
 import br.com.api.projeto.model.exceptions.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+@SecurityScheme(name = SecurityConfiguration.SECURITY,type = SecuritySchemeType.HTTP,bearerFormat = "JWT",scheme = "bearer")
+public class SecurityConfiguration{
+
+	public static final String SECURITY = "bearerAuth";
 	
 	private final TokenProvider tokenProvider;
+
 	
 	private static final String [] ENDPOINTS_LIBERADOS = {
 			"/security/auth/signup",
@@ -54,7 +59,7 @@ public class SecurityConfiguration {
 	private static final String [] ENDPOINTS_PRECISA_LOGIN = {
 			"/security/room/findAll/auth"
 	};
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -67,24 +72,25 @@ public class SecurityConfiguration {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		 http
-         .csrf()
+
+		 http.csrf()
          .disable()
          .authorizeHttpRequests(authorize -> authorize
                  .requestMatchers(ENDPOINTS_LIBERADOS).permitAll()
                  .requestMatchers(ENDPOINTS_RESERVE_ROLE_GUEST).hasAuthority("ROLE_GUEST")
                  .requestMatchers(ENDPOINTS_RESTRITOS_ADMIN).hasAuthority("ROLE_ADMIN")
                  .requestMatchers(ENDPOINTS_PRECISA_LOGIN).authenticated()
+				 .requestMatchers("/h2-console/**").permitAll()
+				 .requestMatchers("/api/v1/auth/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                  .anyRequest().authenticated())
          .sessionManagement(session -> session
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-         .addFilterBefore(new JWTFilter(tokenProvider),UsernamePasswordAuthenticationFilter.class)
+				 .addFilterBefore(new JWTFilter(tokenProvider),UsernamePasswordAuthenticationFilter.class)
              .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint((AuthenticationEntryPoint) new CustomAuthenticationEntryPoint()))
              .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(new CustomAcessDeniedHandler()));
 
 		 return http.build();
 	}
 
-		
 }
 

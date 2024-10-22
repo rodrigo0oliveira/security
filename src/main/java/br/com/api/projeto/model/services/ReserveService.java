@@ -1,8 +1,10 @@
 package br.com.api.projeto.model.services;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -85,19 +87,26 @@ public class ReserveService {
 		list = list.stream().filter(l->l.getCheckin().isBefore(checkout)&& l.getCheckout().isAfter(checkin)).collect(Collectors.toList());
 		
 		if(checkin.isAfter(checkout)) {
-			throw new RuntimeException("A data de entrada não pode ser após a data de saída");
+			throw new DateTimeException("A data de entrada não pode ser após a data de saída");
 		}
 	
 		
 		if(!list.isEmpty()) {
-			throw new RuntimeException("Esse intervalo de  data selecionada não está disponível para reserva - "+list.get(0).getCheckin()
+			throw new DateTimeException("Esse intervalo de  data selecionada não está disponível para reserva - "+list.get(0).getCheckin()
 			+" - "+list.get(0).getCheckout());
 		}
 	}
 	
 	public  String deleteReserveById(String id) {
-		 reserveRepository.deleteById(id);
-		 return "Reserva excluída";
+		Optional<Reserve> reserve = reserveRepository.findById(id);
+
+		if(reserve.isPresent()){
+			reserveRepository.deleteById(id);
+			return "Reserva excluída";
+		}
+
+		return null;
+
 	}
 	
 

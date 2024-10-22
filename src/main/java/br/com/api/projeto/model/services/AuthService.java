@@ -90,7 +90,7 @@ public class AuthService {
 		return "Senha alterada \n"+message;
 	}
 	
-	private String generateRandomPassoword() {
+	public String generateRandomPassoword() {
 		
 		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 				+ "abcdefghyjklmnopqrstuvwxyz"

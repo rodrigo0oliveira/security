@@ -2,6 +2,8 @@ package br.com.api.projeto.model.domain;
 
 import java.util.Collection;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +20,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 
 @EqualsAndHashCode(of = "id")
@@ -43,7 +40,7 @@ public class User implements UserDetails{
 	
 	@Column(name = "email",unique = true)
 	@Email
-	@NotBlank
+	@NotNull
 	private String email;
 	
 	@Column(name = "username",unique = true)

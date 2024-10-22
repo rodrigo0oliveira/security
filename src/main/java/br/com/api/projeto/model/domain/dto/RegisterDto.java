@@ -15,12 +15,10 @@ import lombok.NoArgsConstructor;
 public class RegisterDto {
 	
 	@NotBlank
-	@Column(unique = true)
 	private String username;
 	
 	@Email
 	@NotBlank
-	@Column(unique = true)
 	private String email;
 	
 	@NotBlank
@@ -28,7 +26,6 @@ public class RegisterDto {
 	
 	@NotBlank
 	@CPF
-	@Column(unique = true)
 	private String document;
 	
 	@NotBlank

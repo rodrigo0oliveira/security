@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import br.com.api.projeto.model.domain.Reserve;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ReserveRepository extends JpaRepository<Reserve, String>{
 	
 	 @Query("SELECT u FROM Reserve u WHERE u.room.id = :roomId")

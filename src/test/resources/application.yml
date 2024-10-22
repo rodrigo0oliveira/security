@@ -1,0 +1,21 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: true
+    mail:
+        host: localhost
+        port: 1025
+        username: ""
+        password: ""
+
+jwt:
+  expiration-time: 3600000
+  key: 0ad89486910f1f5a5d79b103703d206bf24138a13156aa06a02d9854c2dfd176

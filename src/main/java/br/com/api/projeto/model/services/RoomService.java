@@ -18,9 +18,9 @@ public class RoomService {
 
 	private final RoomRepository roomRepository;
 
-	public String createRoom(Room room) {
+	public String createRoom(RoomDto room) {
 		Room roomBuilder = Room.builder().id(UUID.randomUUID().toString()).roomnumber(room.getRoomnumber())
-				.dailyPrice(room.getDailyPrice()).status(Status.DISPONÍVEL).roomtype(room.getRoomtype()).build();
+				.dailyPrice(room.getDailyPrice()).status(Status.DISPONÍVEL).roomtype(room.getRoomType()).build();
 
 		roomRepository.save(roomBuilder);
 
