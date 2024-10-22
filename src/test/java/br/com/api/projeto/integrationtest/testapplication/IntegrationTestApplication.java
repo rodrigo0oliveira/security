@@ -4,6 +4,7 @@ import br.com.api.projeto.config.TestConfig;
 import br.com.api.projeto.integrationtest.testcontainers.AbstractIntegrationTest;
 import br.com.api.projeto.model.domain.Room;
 import br.com.api.projeto.model.domain.dto.LoginDto;
+import br.com.api.projeto.model.domain.dto.NewReserveDto;
 import br.com.api.projeto.model.domain.dto.RegisterDto;
 import br.com.api.projeto.model.domain.dto.RoomDto;
 import br.com.api.projeto.model.domain.enums.RoomType;
@@ -22,11 +23,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class IntegrationTestApplication extends AbstractIntegrationTest {
 
@@ -36,11 +37,17 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
 
     private static RoomDto roomDto;
 
-    private static TokenResponse tokenResponse;
+    private static TokenResponse tokenResponseAdmin;
 
-    private static RegisterDto registerDto;
+    private static TokenResponse tokenResponseGuest;
 
-    private static LoginDto loginDto;
+    private static RegisterDto registerAdminDto;
+
+    private static LoginDto loginAdminDto;
+
+    private static RegisterDto registerGuestDto;
+
+    private static LoginDto loginGuesDto;
 
     @BeforeAll
     static void setup() throws JsonProcessingException {
@@ -56,20 +63,24 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
 
         roomDto = new RoomDto("77",new BigDecimal("90"), RoomType.SOLTEIRO);
 
-        registerDto = new RegisterDto("test1","test1@gmail.com","123","35835401078",
-                "ADMIN");
-
-        loginDto = new LoginDto(registerDto.getUsername(),registerDto.getPassword());
+        //ADMIN
+        registerAdminDto = new RegisterDto("test1","test1@gmail.com","123","35835401078", "ADMIN");
+        loginAdminDto = new LoginDto(registerAdminDto.getUsername(), registerAdminDto.getPassword());
+        //GUEST
+        registerGuestDto = new RegisterDto("test2","test2@gmail.com","123","22306099049","GUEST");
+        loginGuesDto = new LoginDto(registerGuestDto.getUsername(),registerGuestDto.getPassword());
 
     }
+
+    //ADMIN
     @Order(1)
     @Test
-    void integrationTestWhenRegisterShouldReturnCreated() throws JsonProcessingException {
+    void integrationTestWhenRegisterAdminShouldReturnCreated() throws JsonProcessingException {
 
         var contentRegister = given().spec(requestSpecification)
                 .contentType(TestConfig.CONTENT_TYPE)
                 .basePath("/security/auth/signup")
-                .body(registerDto)
+                .body(registerAdminDto)
                 .when()
                 .post()
                 .then()
@@ -82,20 +93,20 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
 
     @Order(2)
     @Test
-    void testLoginWhenInformationIsValidShouldReturnOk() throws JsonProcessingException {
+    void testLoginAdminWhenInformationIsValidShouldReturnOk() throws JsonProcessingException {
         var contentLogin = given().spec(requestSpecification)
                 .contentType(TestConfig.CONTENT_TYPE)
                 .basePath("security/auth/login")
-                .body(loginDto)
+                .body(loginAdminDto)
                 .when()
                 .post()
                 .then()
                 .statusCode(200)
                 .extract().body().asString();
 
-        this.tokenResponse = objectMapper.readValue(contentLogin,TokenResponse.class);
-        Assertions.assertEquals(tokenResponse.getUsername(),loginDto.getUsername());
-        Assertions.assertNotNull(tokenResponse);
+        this.tokenResponseAdmin = objectMapper.readValue(contentLogin,TokenResponse.class);
+        Assertions.assertEquals(tokenResponseAdmin.getUsername(), loginAdminDto.getUsername());
+        Assertions.assertNotNull(tokenResponseAdmin);
     }
 
     @Order(3)
@@ -104,7 +115,7 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
         var contentCreateRoom = given().spec(requestSpecification)
                 .contentType(TestConfig.CONTENT_TYPE)
                 .basePath("security/room/create")
-                .header("Authorization","Bearer "+this.tokenResponse.getToken())
+                .header("Authorization","Bearer "+ tokenResponseAdmin.getToken())
                 .body(roomDto)
                 .when()
                 .post()
@@ -117,7 +128,7 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
         var contentCreateSecondRoom = given().spec(requestSpecification)
                 .contentType(TestConfig.CONTENT_TYPE)
                 .basePath("security/room/create")
-                .header("Authorization","Bearer "+this.tokenResponse.getToken())
+                .header("Authorization","Bearer "+ tokenResponseAdmin.getToken())
                 .body(new RoomDto("92",roomDto.getDailyPrice(),roomDto.getRoomType()))
                 .when()
                 .post()
@@ -136,7 +147,7 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
                 .basePath("security/room/edit/{roomnumber}")
                 .pathParam("roomnumber",roomDto.getRoomnumber())
                 .body(new Room(RoomType.SUÍTE,new BigDecimal("190"),Status.DISPONÍVEL))
-                .header("Authorization","Bearer "+this.tokenResponse.getToken())
+                .header("Authorization","Bearer "+ tokenResponseAdmin.getToken())
                 .when()
                 .put()
                 .then()
@@ -156,7 +167,7 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
                 .basePath("security/room/edit/{roomnumber}")
                 .pathParam("roomnumber","990")
                 .body(new Room(RoomType.SUÍTE,new BigDecimal("190"),Status.DISPONÍVEL))
-                .header("Authorization","Bearer "+this.tokenResponse.getToken())
+                .header("Authorization","Bearer "+ tokenResponseAdmin.getToken())
                 .when()
                 .put()
                 .then()
@@ -174,7 +185,7 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
         var contentFindAll = given().spec(requestSpecification)
                 .contentType(TestConfig.CONTENT_TYPE)
                 .basePath("security/room/findAll")
-                .header("Authorization","Bearer "+this.tokenResponse.getToken())
+                .header("Authorization","Bearer "+ tokenResponseAdmin.getToken())
                 .when()
                 .get()
                 .then()
@@ -186,5 +197,98 @@ public class IntegrationTestApplication extends AbstractIntegrationTest {
 
         Assertions.assertTrue(contentFindAll.contains(roomDto.getRoomnumber()));
         Assertions.assertNotNull(contentFindAll);
+    }
+
+    //GUEST
+    @Order(7)
+    @Test
+    void testCreateRegisterGuestShouldReturnCreated(){
+        var contentRegister = given().spec(requestSpecification)
+                .contentType(TestConfig.CONTENT_TYPE)
+                .basePath("/security/auth/signup")
+                .body(registerGuestDto)
+                .when()
+                .post()
+                .then()
+                .statusCode(201)
+                .extract()
+                .body().asString();
+
+        Assertions.assertEquals("Conta criada",contentRegister);
+    }
+
+    @Order(8)
+    @Test
+    void testLoginGuestWhenInformationIsValidShouldReturnOk() throws JsonProcessingException {
+        var contentLogin = given().spec(requestSpecification)
+                .contentType(TestConfig.CONTENT_TYPE)
+                .basePath("security/auth/login")
+                .body(loginGuesDto)
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .extract().body().asString();
+
+        this.tokenResponseGuest = objectMapper.readValue(contentLogin,TokenResponse.class);
+        Assertions.assertEquals(tokenResponseGuest.getUsername(), loginGuesDto.getUsername());
+        Assertions.assertNotNull(tokenResponseGuest);
+    }
+
+    @Order(9)
+    @Test
+    void testCreateReserveShouldReturnCreated(){
+        NewReserveDto reserveDto = new NewReserveDto("22-10-2024","25-10-2024",roomDto.getRoomnumber());
+
+        var contentReserve = given().spec(requestSpecification)
+                .contentType(TestConfig.CONTENT_TYPE)
+                .basePath("security/reserve/create")
+                .body(reserveDto)
+                .header("Authorization","Bearer "+ tokenResponseGuest.getToken())
+                .when()
+                .post()
+                .then()
+                .statusCode(201)
+                .extract().body().asString();
+
+        Assertions.assertEquals("Reserva criada",contentReserve);
+    }
+
+    @Order(10)
+    @Test
+    void testCreateReserveWhenDatesAreNotAvailableShouldReturnBadRequest(){
+        NewReserveDto reserveDto = new NewReserveDto("22-10-2024","23-10-2024",roomDto.getRoomnumber());
+
+        var contentReserve = given().spec(requestSpecification)
+                .contentType(TestConfig.CONTENT_TYPE)
+                .basePath("security/reserve/create")
+                .body(reserveDto)
+                .header("Authorization","Bearer "+ tokenResponseGuest.getToken())
+                .when()
+                .post()
+                .then()
+                .statusCode(409)
+                .extract().body().asString();
+
+
+
+    }
+
+    @Order(11)
+    @Test
+    void testFindAllReservesToUserAuthenticatedShouldReturnOk(){
+        var contentFindAll = given().spec(requestSpecification)
+                .contentType(TestConfig.CONTENT_TYPE)
+                .basePath("security/reserve/findAll/me")
+                .header("Authorization","Bearer "+ tokenResponseGuest.getToken())
+                .when()
+                .get()
+                .then()
+                .statusCode(200)
+                .extract()
+                .body()
+                .asString();
+
+        Assertions.assertTrue(contentFindAll.contains(loginGuesDto.getUsername()));
     }
 }

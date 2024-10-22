@@ -38,8 +38,14 @@ public class ReserveController {
 	@ApiResponse(responseCode = "500",description = "Erro no servidor")
 	@PostMapping("/create")
 	public ResponseEntity<String> createReserve (@RequestBody NewReserveDto newReserve){
-		String message = reserveService.createReserve(newReserve);
-		return new ResponseEntity<>(message,HttpStatus.CREATED);
+			String message = "";
+			try{
+				message = reserveService.createReserve(newReserve);
+				return new ResponseEntity<>(message,HttpStatus.CREATED);
+			}
+			catch (RuntimeException e){
+				return new ResponseEntity<>(message,HttpStatus.CONFLICT);
+			}
 	}
 
 	@Operation(summary = "Buscar todas as reservas",description = "Metodo para buscar todas as reservas")
