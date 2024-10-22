@@ -1,5 +1,6 @@
 package br.com.api.projeto.model.exceptions;
 
+import java.time.DateTimeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,4 +55,10 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(message,HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(DateTimeException.class)
+	public ResponseEntity<String> DataTimeExcetion(DateTimeException dateTimeException){
+		return new ResponseEntity<>(dateTimeException.getMessage(),HttpStatus.CONFLICT);
+	}
+
 }
