@@ -2,6 +2,7 @@ package br.com.api.projeto.model.controller;
 
 import java.util.List;
 
+import br.com.api.projeto.model.domain.dto.RoomEditDto;
 import br.com.api.projeto.model.security.SecurityConfiguration;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -62,7 +63,7 @@ public class RoomController {
 	@ApiResponse(responseCode = "500",description = "Erro no servidor")
 	@ApiResponse(responseCode = "403",description = "Usuário não possui acesso ao recurso")
 	@PutMapping("/edit/{roomnumber}")
-	public ResponseEntity<String> editRoom(@PathVariable String roomnumber,@RequestBody Room room){
+	public ResponseEntity<String> editRoom(@PathVariable String roomnumber,@RequestBody RoomEditDto room){
 		String message = roomService.editRoom(roomnumber,room);
 		if(message=="Quarto não encontrado"){
 			return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);

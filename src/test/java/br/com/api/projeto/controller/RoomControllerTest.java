@@ -3,6 +3,7 @@ package br.com.api.projeto.controller;
 import br.com.api.projeto.model.controller.RoomController;
 import br.com.api.projeto.model.domain.Room;
 import br.com.api.projeto.model.domain.dto.RoomDto;
+import br.com.api.projeto.model.domain.dto.RoomEditDto;
 import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.security.SecurityConfiguration;
@@ -117,7 +118,7 @@ public class RoomControllerTest {
 
     @Test
     void testEditRoomWhenRoomExistShouldReturnOk() throws Exception {
-        when(roomService.editRoom("3",room)).thenReturn("Quarto atualizado");
+        when(roomService.editRoom("3",new RoomEditDto())).thenReturn("Quarto atualizado");
 
         ResultActions response =  mockMvc.perform(put("/security/room/edit/{roomnumber}",3)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -131,11 +132,11 @@ public class RoomControllerTest {
     @Test
     void testEditRoomWhenRoomNotExistShouldReturnNotFound() throws Exception {
         String message = "Quarto não encontrado";
-        when(roomService.editRoom("6",room)).thenReturn(message);
+        when(roomService.editRoom("6",new RoomEditDto())).thenReturn(message);
 
         ResultActions response = mockMvc.perform(put("/security/room/edit/{roomnumber}",6)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(room)));
+                .content(objectMapper.writeValueAsString(new RoomEditDto())));
 
         response.andDo(print())
                 .andExpect(status().isNotFound());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import br.com.api.projeto.model.domain.dto.RoomEditDto;
 import org.springframework.stereotype.Service;
 
 import br.com.api.projeto.model.domain.Room;
@@ -33,7 +34,7 @@ public class RoomService {
 		return list;
 	}
 
-	public String editRoom(String roomnumber,Room room) {
+	public String editRoom(String roomnumber, RoomEditDto room) {
 		Room getRoom = roomRepository.findByroomnumber(roomnumber);
 		if (getRoom==null) {
 			return "Quarto não encontrado";
@@ -44,7 +45,7 @@ public class RoomService {
 		return "Quarto atualizado";
 	}
 
-	public void editRoomInformation(Room origin, Room edit) {
+	public void editRoomInformation(Room origin, RoomEditDto edit) {
 		origin.setDailyPrice(edit.getDailyPrice());
 		origin.setStatus(edit.getStatus());
 		origin.setRoomtype(edit.getRoomtype());

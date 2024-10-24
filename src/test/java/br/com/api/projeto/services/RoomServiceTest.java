@@ -2,6 +2,7 @@ package br.com.api.projeto.services;
 
 import br.com.api.projeto.model.domain.Room;
 import br.com.api.projeto.model.domain.dto.RoomDto;
+import br.com.api.projeto.model.domain.dto.RoomEditDto;
 import br.com.api.projeto.model.domain.enums.RoomType;
 import br.com.api.projeto.model.domain.enums.Status;
 import br.com.api.projeto.model.repository.RoomRepository;
@@ -67,7 +68,7 @@ public class RoomServiceTest {
 
        when(roomRepository.findByroomnumber(any(String.class))).thenReturn(null);
 
-       String actualMessage = roomService.editRoom("1",room);
+       String actualMessage = roomService.editRoom("1",new RoomEditDto());
        String expectedMessage = "Quarto não encontrado";
 
        Assertions.assertEquals(actualMessage, expectedMessage);
@@ -77,11 +78,18 @@ public class RoomServiceTest {
     @Test
     void testEditRoomShouldReturnRoomEdited(){
 
+        RoomEditDto roomDto = RoomEditDto.builder()
+                        .status(Status.DISPONÍVEL)
+                                .roomtype(RoomType.SOLTEIRO)
+                                        .dailyPrice(new BigDecimal("190"))
+                                                .build();
+
+
         when(roomRepository.findByroomnumber(any(String.class))).thenReturn(room);
-        doNothing().when(roomService).editRoomInformation(room,room);
+        doNothing().when(roomService).editRoomInformation(room,roomDto);
         when(roomRepository.save(any(Room.class))).thenReturn(room);
 
-        String actualMessage = roomService.editRoom("1",room);
+        String actualMessage = roomService.editRoom("1",roomDto);
         String expectedMessage = "Quarto atualizado";
 
         Assertions.assertEquals(actualMessage, expectedMessage);
