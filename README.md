@@ -4,6 +4,12 @@
 ## Descrição do projeto 
 * Durante a faculdade, enfrentei o desafio de criar uma aplicação em Java utilizando estruturas de dados. Recentemente, decidi aprimorar esse projeto, incorporando Spring Security para garantir a segurança dos dados e Docker para facilitar a implantação. Neste processo, aprendi bastante sobre construção e arquitetura de APIs, além de implementar a segurança das informações com tokens JWT e realizar a containerização, tornando o desenvolvimento mais ágil e eficiente,além de testes unitários e de integração.
 
+## Etapas para rodar o projeto
+* Clone o repositório : git clone https://github.com/rodrigo0oliveira/security.git
+* Build na aplicação via docker : docker build -t projeto:latest .
+* Iniciar a aplicação via docker : docker run -d -p 8080:8080 projeto:latest
+
+
 ## Documentação do projeto com Swagger
 ![image](https://github.com/user-attachments/assets/6df1c485-9b11-4f17-b84e-e878edff5bc4)
 
